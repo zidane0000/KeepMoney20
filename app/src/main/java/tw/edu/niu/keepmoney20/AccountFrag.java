@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Bigdata_lab on 2018/3/25.
- */
+
 
 public class AccountFrag extends Fragment {
     @Nullable

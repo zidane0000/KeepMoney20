@@ -74,15 +74,27 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_account) {
+        if (id == R.id.nav_home) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.main , new AccountFrag()).commit();
-            Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
             // Handle the camera action
-        } else if (id == R.id.nav_statistics) {
+        } else if (id == R.id.nav_account) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
-            Toast.makeText(this, "統計" ,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
+        }else if (id == R.id.nav_setting) {
+            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
+            Toast.makeText(this, "設定" ,Toast.LENGTH_LONG).show();
+        }else if (id == R.id.nav_about) {
+            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
+            Toast.makeText(this, "關於" ,Toast.LENGTH_LONG).show();
+        }else if (id == R.id.nav_statistics) {
+
+        }else if (id == R.id.nav_statistics) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

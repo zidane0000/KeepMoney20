@@ -5,11 +5,23 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:title="首頁" />
+        <item
             android:id="@+id/nav_account"
             android:title="帳戶" />
         <item
-            android:id="@+id/nav_statistics"
-            android:title="統計" />
+            android:id="@+id/nav_setting"
+            android:title="設定" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="關於" />
+        <item
+            android:id="@+id/nav_share"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_evaluation"
+            android:title="評價" />
     </group>
 
 </menu>

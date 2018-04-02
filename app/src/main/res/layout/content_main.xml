@@ -9,4 +9,11 @@
     tools:showIn="@layout/app_bar_main"
     android:id="@+id/main">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="130dp"
+        android:layout_height="89dp"
+        android:text="HOME"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="246dp" />
 </android.support.constraint.ConstraintLayout>

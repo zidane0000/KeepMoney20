@@ -1,21 +1,26 @@
 package tw.edu.niu.keepmoney20;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
- * Created by DFT on 2018/4/2.
+ * Created by Bigdata_lab on 2018/3/25.
  */
 
 public class body_about extends Fragment {
+    Button btn;
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.menu_about , container , false);
+
+
+    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+        View myView = inflater.inflate(R.layout.fragstatistics , container , false);
         return myView;
     }
 }

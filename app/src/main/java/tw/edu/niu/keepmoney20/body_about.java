@@ -13,14 +13,11 @@ import android.widget.Button;
  */
 
 public class body_about extends Fragment {
-    Button btn;
 
     @Nullable
     @Override
-
-
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.fragstatistics , container , false);
+        View myView = inflater.inflate(R.layout.menu_about , container , false);
         return myView;
     }
 }

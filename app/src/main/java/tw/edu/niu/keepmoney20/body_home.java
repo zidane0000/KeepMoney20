@@ -15,7 +15,7 @@ public class body_home extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.fragaccount , container , false);
+        View myView = inflater.inflate(R.layout.menu_home , container , false);
         return myView;
     }
 }

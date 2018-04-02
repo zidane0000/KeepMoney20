@@ -15,7 +15,7 @@ public class body_setting extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.fragaccount , container , false);
+        View myView = inflater.inflate(R.layout.menu_setting , container , false);
         return myView;
     }
 }

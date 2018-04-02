@@ -1,7 +1,7 @@
 package tw.edu.niu.keepmoney20;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,7 @@ public class body_account extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.fragaccount , container , false);
+        View myView = inflater.inflate(R.layout.menu_account , container , false);
         return myView;
     }
 }

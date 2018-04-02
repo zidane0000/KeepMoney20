@@ -76,24 +76,24 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new AccountFrag()).commit();
+            fm.beginTransaction().replace(R.id.main , new body_home()).commit();
             Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
             // Handle the camera action
         } else if (id == R.id.nav_account) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
+            fm.beginTransaction().replace(R.id.main , new body_account()).commit();
             Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
         }else if (id == R.id.nav_setting) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
+            fm.beginTransaction().replace(R.id.main , new body_setting()).commit();
             Toast.makeText(this, "設定" ,Toast.LENGTH_LONG).show();
         }else if (id == R.id.nav_about) {
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new StatisticsFrag()).commit();
+            fm.beginTransaction().replace(R.id.main , new body_about()).commit();
             Toast.makeText(this, "關於" ,Toast.LENGTH_LONG).show();
-        }else if (id == R.id.nav_statistics) {
+        }else if (id == R.id.nav_share) {
 
-        }else if (id == R.id.nav_statistics) {
+        }else if (id == R.id.nav_evaluation) {
 
         }
 

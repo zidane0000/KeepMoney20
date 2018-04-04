@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //進入的第一個畫面改為body_home
+        body_home mbody_home = new body_home();
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.main,mbody_home).commit();
     }
 
     @Override

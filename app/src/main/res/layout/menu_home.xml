@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/menu_home">
 
     <TextView
         android:id="@+id/showDate"
@@ -21,5 +23,13 @@
         android:layout_marginTop="25dp"
         android:onClick="startDate"
         android:text="設定時間" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startDate"
+        android:layout_marginTop="20dp" />
+
 
 </RelativeLayout>

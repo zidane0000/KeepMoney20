@@ -1,6 +1,7 @@
 package tw.edu.niu.keepmoney20;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,20 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView textView;
+    RelativeLayout remenu_home;
+    RelativeLayout remenu_account;
+    RelativeLayout remenu_about;
+    RelativeLayout remenu_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        remenu_home = (RelativeLayout) findViewById(R.id.menu_home);
+        remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
+        remenu_account=(RelativeLayout)findViewById(R.id.menu_account);
+        remenu_setting=(RelativeLayout)findViewById(R.id.menu_setting);
 
         textView = (TextView)findViewById(R.id.showDate);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,12 +67,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /* 右上角的設定 顯示在res/menu/main
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -88,19 +100,27 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction().replace(R.id.main , new body_home()).commit();
             Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
-            // Handle the camera action
         } else if (id == R.id.nav_account) {
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new body_account()).commit();
+
+            Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_account.class);
+            abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(abbody_account);
             Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
+
         }else if (id == R.id.nav_setting) {
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new body_setting()).commit();
+
+            Intent abbody_setting = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_setting.class);
+            abbody_setting.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(abbody_setting);
             Toast.makeText(this, "設定" ,Toast.LENGTH_LONG).show();
+
         }else if (id == R.id.nav_about) {
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new body_about()).commit();
+
+            Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_about.class);
+            abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(abbody_account);
             Toast.makeText(this, "關於" ,Toast.LENGTH_LONG).show();
+
         }else if (id == R.id.nav_share) {
 
         }else if (id == R.id.nav_evaluation) {

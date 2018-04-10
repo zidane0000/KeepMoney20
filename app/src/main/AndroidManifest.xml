@@ -20,9 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".body_home" />
-        <activity android:name=".menu_about" />
-        <activity android:name=".menu_setting" />
-        <activity android:name=".menu_account"></activity>
+        <activity android:name=".menu_about" android:parentActivityName=".body_home" />
+        <activity android:name=".menu_setting" android:parentActivityName=".body_home" />
+        <activity android:name=".menu_account" android:parentActivityName=".body_home" ></activity>
     </application>
 
 </manifest>

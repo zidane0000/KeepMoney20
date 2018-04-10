@@ -1,5 +1,6 @@
 package tw.edu.niu.keepmoney20;
 
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -51,8 +52,12 @@ public class MainActivity extends AppCompatActivity
         remenu_setting=(RelativeLayout)findViewById(R.id.menu_setting);
 
         textView = (TextView)findViewById(R.id.showDate);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

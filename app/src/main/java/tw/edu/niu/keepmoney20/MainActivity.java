@@ -2,6 +2,7 @@ package tw.edu.niu.keepmoney20;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -33,7 +34,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        remenu_home = (RelativeLayout) findViewById(R.id.menu_home);
+        //強制鎖定為直屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+        remenu_home = (RelativeLayout) findViewById(R.id.main);
         remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
         remenu_account=(RelativeLayout)findViewById(R.id.menu_account);
         remenu_setting=(RelativeLayout)findViewById(R.id.menu_setting);
@@ -51,10 +56,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //進入的第一個畫面改為body_home
-        body_home mbody_home = new body_home();
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.main,mbody_home).commit();
     }
 
     @Override
@@ -97,8 +98,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().replace(R.id.main , new body_home()).commit();
+            Intent abbody_home = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.body_home.class);
+            abbody_home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(abbody_home);
             Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_account) {
 

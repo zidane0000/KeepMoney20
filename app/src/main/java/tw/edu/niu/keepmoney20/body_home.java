@@ -15,5 +15,6 @@ public class body_home extends AppCompatActivity {
 
         //***************連結到content_main*********************
         setContentView(R.layout.content_main);
+
     }
 }

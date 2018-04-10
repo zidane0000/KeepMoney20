@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".body_home" />
         <activity android:name=".menu_about" />
         <activity android:name=".menu_setting" />
         <activity android:name=".menu_account"></activity>

@@ -12,7 +12,8 @@
     tools:context="tw.edu.niu.keepmoney20.MainActivity"
     tools:showIn="@layout/app_bar_main"
     android:id="@+id/main"
-    android:background="@drawable/blue">
+    android:background="@drawable/blue"
+    >
 
     <TextView
         android:id="@+id/showDate"
@@ -52,13 +53,13 @@
         android:text="MANUALLYENTER" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/content_main_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/enter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/startDate" />
+        android:layout_below="@+id/startDate"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible" />
 
 
 </RelativeLayout>

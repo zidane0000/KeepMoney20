@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tw.edu.niu.keepmoney20">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,9 +22,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".body_home" />
-        <activity android:name=".menu_about" android:parentActivityName=".body_home" />
-        <activity android:name=".menu_setting" android:parentActivityName=".body_home" />
-        <activity android:name=".menu_account" android:parentActivityName=".body_home" ></activity>
+        <activity
+            android:name=".menu_about"
+            android:parentActivityName=".body_home" />
+        <activity
+            android:name=".menu_setting"
+            android:parentActivityName=".body_home" />
+        <activity
+            android:name=".menu_account"
+            android:parentActivityName=".body_home" />
+        <activity android:name=".body_home_additem"></activity>
     </application>
 
 </manifest>

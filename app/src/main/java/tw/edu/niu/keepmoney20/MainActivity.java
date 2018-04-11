@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String shareaddress="https://www.google.com.tw/";
     TextView textView;
     RelativeLayout remenu_home;
     RelativeLayout remenu_account;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayAdapter<String> adapter;
     private ArrayList<String> mData = new ArrayList<>();
     private Button addbutton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +164,10 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "關於" ,Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.nav_share) {
+
+            Uri urishareaddress = Uri.parse(shareaddress);
+            Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
+            startActivity(shareus);
 
         }else if (id == R.id.nav_evaluation) {
 

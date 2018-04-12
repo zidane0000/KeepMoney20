@@ -1,6 +1,5 @@
 package tw.edu.niu.keepmoney20;
 
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -34,9 +33,9 @@ public class MainActivity extends AppCompatActivity
     RelativeLayout remenu_account;
     RelativeLayout remenu_about;
     RelativeLayout remenu_setting;
-    private ListView listView;
+    private ListView tohome_listView;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> mData = new ArrayList<>();
+    private ArrayList<String> tohome_listview_data = new ArrayList<>();
     private Button addbutton;
 
 
@@ -73,28 +72,29 @@ public class MainActivity extends AppCompatActivity
 
         // 準備資料，塞50個項目到ArrayList裡
         for(int i = 0; i < 3; i++) {
-            mData.add("項目"+i);
+            tohome_listview_data.add("項目"+i);
         }
         /* 初始Adapter
         *  第一個參數context
         *  第二個參數是列的外觀，這邊用android內建的
         *  第三個參數是要顯示的資料，即上面準備好的mData
         */
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mData);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tohome_listview_data);
         // 連結元件
-        listView = (ListView) findViewById(R.id.content_main_listview);
+        tohome_listView = (ListView) findViewById(R.id.content_main_listview);
         // 設置adapter給listview
-        listView.setAdapter(adapter);
+        tohome_listView.setAdapter(adapter);
 
         addbutton = (Button) findViewById(R.id.enter2);
         addbutton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
                 // 塞項目到ArrayList
-                mData.add("項目");
+                tohome_listview_data.add("項目");
                 adapter.notifyDataSetChanged();
             }
         });
+
 
     }
 
@@ -199,4 +199,5 @@ public class MainActivity extends AppCompatActivity
         }, mYear, mMonth, mDay).show();
 
     }
+
 }

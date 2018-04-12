@@ -29,4 +29,7 @@ dependencies {
 
     //RecyclerView 在home的中間
     compile 'com.android.support:recyclerview-v7:26.1.0'
+
+    //圓餅圖或各式圖形
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

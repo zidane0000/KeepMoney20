@@ -31,7 +31,6 @@
         <activity
             android:name=".menu_account"
             android:parentActivityName=".body_home" />
-        <activity android:name=".body_home_additem"></activity>
     </application>
 
 </manifest>

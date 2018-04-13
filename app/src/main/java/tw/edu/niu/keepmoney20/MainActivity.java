@@ -165,9 +165,16 @@ public class MainActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_share) {
 
-            Uri urishareaddress = Uri.parse(shareaddress);
+            /*Uri urishareaddress = Uri.parse(shareaddress);
             Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
-            startActivity(shareus);
+            startActivity(shareus);*/
+            Intent shareintent = new Intent(Intent.ACTION_SEND);
+            shareintent.setType("text/plain");
+            String shareBody = "Your body here";
+            String shareSub = "Your Subject here";
+            shareintent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+            shareintent.putExtra(Intent.EXTRA_TEXT,shareBody);
+            startActivity(Intent.createChooser(shareintent, "share using"));
 
         }else if (id == R.id.nav_evaluation) {
 

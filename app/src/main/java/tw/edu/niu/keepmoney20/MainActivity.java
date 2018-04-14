@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             String shareSub = "Your Subject here";
             shareintent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
             shareintent.putExtra(Intent.EXTRA_TEXT,shareBody);
-            startActivity(Intent.createChooser(shareintent, "share using"));
+            startActivity(Intent.createChooser(shareintent, "分享至"));
 
         }else if (id == R.id.nav_evaluation) {
 

@@ -8,14 +8,22 @@
     android:background="@drawable/blue"
     android:id="@+id/menu_account">
 
+    <TextView
+        android:id="@+id/accountdayshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="年/月" />
+
     <view
         android:id="@+id/pie_view"
         class="im.dacer.androidcharts.PieView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp" />
+        android:layout_below="@+id/accountdayshow"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/account_total"
@@ -54,5 +62,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/account_expenses" />
+
+    <Button
+        android:id="@+id/gotoLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/pie_view"
+        android:layout_marginTop="72dp"
+        android:layout_toLeftOf="@+id/account_income"
+        android:layout_toStartOf="@+id/account_income"
+        android:text="LF" />
+
+    <Button
+        android:id="@+id/gotoRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/gotoLeft"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:layout_toEndOf="@+id/pie_view"
+        android:layout_toRightOf="@+id/pie_view"
+        android:text="RH" />
 
 </RelativeLayout>

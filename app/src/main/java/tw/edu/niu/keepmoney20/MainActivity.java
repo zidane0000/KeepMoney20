@@ -21,14 +21,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    String shareaddress="https://www.google.com.tw/";
     TextView textView;
+    Button Manuallyadd;
     RelativeLayout remenu_home;
     RelativeLayout remenu_account;
     RelativeLayout remenu_about;
@@ -85,17 +87,26 @@ public class MainActivity extends AppCompatActivity
         // 設置adapter給listview
         tohome_listView.setAdapter(adapter);
 
-        addbutton = (Button) findViewById(R.id.enter2);
-        addbutton.setOnClickListener(new Button.OnClickListener(){
+//        // 塞項目到ArrayList
+//        tohome_listview_data.add("項目");
+//        adapter.notifyDataSetChanged();
+
+        Manuallyadd = (Button) findViewById(R.id.ManuallyButton);
+        Manuallyadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 塞項目到ArrayList
-                tohome_listview_data.add("項目");
-                adapter.notifyDataSetChanged();
+                //至新增的畫面
+                Intent gotoNewScreen = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.NewScreen.class);
+                gotoNewScreen.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(gotoNewScreen);
             }
         });
 
-
+        //程式進入就顯示今天日期
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年M月d日");
+        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+        String str = formatter.format(curDate);
+        textView.setText(str);
     }
 
     @Override
@@ -138,9 +149,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            /*Intent abbody_home = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.body_home.class);
-            abbody_home.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(abbody_home);*/
             Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_account) {
 
@@ -165,9 +173,6 @@ public class MainActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_share) {
 
-            /*Uri urishareaddress = Uri.parse(shareaddress);
-            Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
-            startActivity(shareus);*/
             Intent shareintent = new Intent(Intent.ACTION_SEND);
             shareintent.setType("text/plain");
             String shareBody = "Your body here";
@@ -187,7 +192,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    //        設定時間
+    //設定時間
      public void startDate(View view) {
         Calendar c = Calendar.getInstance();
         int mYear, mMonth, mDay;
@@ -198,13 +203,12 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                textView.setText(year + " 年 "+ month + " 月 " + day + " 日 ");
+                textView.setText(year+"年"+(month+1) + "月" + day + "日");
 //                saveYear = year;
 //                saveMonth = month;
 //                saveDay = day;
             }
         }, mYear, mMonth, mDay).show();
-
     }
 
 }

@@ -27,6 +27,8 @@ public class menu_account extends AppCompatActivity {
         setContentView(R.layout.activity_menu_account);
         //強制鎖定為直屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //設定標題
+        setTitle("帳戶");
 
         PieView pieView = (PieView)findViewById(R.id.pie_view);
         ArrayList<PieHelper> pieHelperArrayList = new ArrayList<PieHelper>();

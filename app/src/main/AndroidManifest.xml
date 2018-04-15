@@ -21,16 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".body_home" />
         <activity
             android:name=".menu_about"
-            android:parentActivityName=".body_home" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".menu_setting"
-            android:parentActivityName=".body_home" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".menu_account"
-            android:parentActivityName=".body_home" />
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".NewScreen"></activity>
     </application>
 
 </manifest>

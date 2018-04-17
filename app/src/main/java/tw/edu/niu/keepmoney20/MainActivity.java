@@ -29,6 +29,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //評價的網址 放我們的app網址
+    String EvaluationAddress = "https://play.google.com/store/apps?hl=zh_TW";
     TextView textView;
     Button Manuallyadd;
     RelativeLayout remenu_home;
@@ -38,17 +40,13 @@ public class MainActivity extends AppCompatActivity
     private ListView tohome_listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> tohome_listview_data = new ArrayList<>();
-    private Button addbutton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //強制鎖定為直屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 
         remenu_home = (RelativeLayout) findViewById(R.id.main);
         remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -182,7 +179,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(Intent.createChooser(shareintent, "分享至"));
 
         }else if (id == R.id.nav_evaluation) {
-
+            Uri urishareaddress = Uri.parse(EvaluationAddress);
+            Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
+            startActivity(shareus);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

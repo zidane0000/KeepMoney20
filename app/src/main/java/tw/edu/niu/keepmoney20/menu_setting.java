@@ -12,8 +12,9 @@ public class menu_setting extends AppCompatActivity {
 
         //強制鎖定為直屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         setContentView(R.layout.activity_menu_setting);
+        //設定標題
+        setTitle("設定");
 
     }
 }

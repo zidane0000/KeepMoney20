@@ -30,7 +30,10 @@
         <activity
             android:name=".menu_account"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".NewScreen"></activity>
+        <activity
+            android:name=".NewScreen"
+            android:parentActivityName=".MainActivity" >
+        </activity>
     </application>
 
 </manifest>

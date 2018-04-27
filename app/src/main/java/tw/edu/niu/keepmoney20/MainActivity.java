@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     //評價的網址 放我們的app網址
     String EvaluationAddress = "https://play.google.com/store/apps?hl=zh_TW";
     TextView textView;
-    Button Manuallyadd;
+    ImageView Manuallyadd;
     RelativeLayout remenu_home;
     RelativeLayout remenu_account;
     RelativeLayout remenu_about;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
 //        tohome_listview_data.add("項目");
 //        adapter.notifyDataSetChanged();
 
-        Manuallyadd = (Button) findViewById(R.id.ManuallyButton);
+        Manuallyadd = (ImageView) findViewById(R.id.ManuallyButton);
         Manuallyadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,5 +214,11 @@ public class MainActivity extends AppCompatActivity
 //                saveDay = day;
             }
         }, mYear, mMonth, mDay).show();
+    }
+
+    public void add(View view) {
+        Intent gotoNewScreen = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.NewScreen.class);
+        gotoNewScreen.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(gotoNewScreen);
     }
 }

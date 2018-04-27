@@ -29,20 +29,21 @@
     <ImageView
         android:id="@+id/VoiceEnter"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@+id/ManuallyButton"
-        android:src="@drawable/mic"/>
+        android:clickable="true"
+        android:src="@drawable/voicemic" />
 
-    <Button
+    <ImageView
         android:id="@+id/ManuallyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="MANUALLYENTER" />
+        android:clickable="true"
+        android:onClick="add"
+        android:src="@drawable/handadd" />
 
     <ListView
         android:id="@+id/content_main_listview"

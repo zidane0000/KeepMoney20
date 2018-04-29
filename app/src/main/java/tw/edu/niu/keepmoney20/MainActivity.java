@@ -1,6 +1,7 @@
 package tw.edu.niu.keepmoney20;
 
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,7 +41,11 @@ public class MainActivity extends AppCompatActivity
     //評價的網址 放我們的app網址
     String EvaluationAddress = "https://play.google.com/store/apps?hl=zh_TW";
     TextView textView;
-    ImageView Manuallyadd;
+
+    ImageButton handaddto;
+    ImageButton voiceaddto;
+    TextView saywhat;
+
     RelativeLayout remenu_home;
     RelativeLayout remenu_account;
     RelativeLayout remenu_about;
@@ -94,8 +101,24 @@ public class MainActivity extends AppCompatActivity
 //        tohome_listview_data.add("項目");
 //        adapter.notifyDataSetChanged();
 
-        Manuallyadd = (ImageView) findViewById(R.id.ManuallyButton);
-        Manuallyadd.setOnClickListener(new View.OnClickListener() {
+        voiceaddto = (ImageButton) findViewById(R.id.VoiceEnter);
+        voiceaddto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hello, How can I help you?");
+                try {
+                    startActivityForResult(intent, 100);
+                } catch (ActivityNotFoundException a) {
+
+                }
+            }
+        });
+        saywhat = (TextView) findViewById(R.id.showsay);
+        handaddto = (ImageButton) findViewById(R.id.ManuallyButton);
+        handaddto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //至新增的畫面
@@ -216,9 +239,19 @@ public class MainActivity extends AppCompatActivity
         }, mYear, mMonth, mDay).show();
     }
 
-    public void add(View view) {
-        Intent gotoNewScreen = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.NewScreen.class);
-        gotoNewScreen.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(gotoNewScreen);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 100: {
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    saywhat.setText(result.get(0));
+                }
+                break;
+            }
+
+        }
     }
 }

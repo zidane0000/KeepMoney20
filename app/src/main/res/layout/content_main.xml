@@ -26,33 +26,47 @@
         android:text="時間顯示"
         android:textSize="30sp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/VoiceEnter"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:background="@null"
         android:clickable="true"
+        android:padding="16dp"
         android:src="@drawable/voicemic" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/ManuallyButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:clickable="true"
-        android:onClick="add"
+        android:background="@null"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/handadd" />
+
+    <TextView
+        android:id="@+id/showsay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="還沒說話" />
 
     <ListView
         android:id="@+id/content_main_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="280dp"
+        android:layout_above="@+id/VoiceEnter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/showDate"
-        android:layout_marginTop="16dp"
-        android:visibility="visible" />
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>

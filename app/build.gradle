@@ -28,9 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     //RecyclerView 在home的中間
-    compile 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
 
     //圓餅圖
-    compile 'im.dacer:AndroidCharts:1.0.4'
+    implementation 'im.dacer:AndroidCharts:1.0.4'
 
 }

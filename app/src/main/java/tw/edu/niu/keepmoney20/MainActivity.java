@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
         remenu_home = (RelativeLayout) findViewById(R.id.main);
         remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
         remenu_account=(RelativeLayout)findViewById(R.id.menu_account);
-        remenu_setting=(RelativeLayout)findViewById(R.id.menu_setting);
 
         textView = (TextView)findViewById(R.id.showDate);
 
@@ -168,13 +167,6 @@ public class MainActivity extends AppCompatActivity
             abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(abbody_account);
             Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
-
-        }else if (id == R.id.nav_setting) {
-
-            Intent abbody_setting = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_setting.class);
-            abbody_setting.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(abbody_setting);
-            Toast.makeText(this, "設定" ,Toast.LENGTH_LONG).show();
 
         }else if (id == R.id.nav_about) {
 

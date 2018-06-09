@@ -10,19 +10,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:contentDescription="@null"
-        android:src="@drawable/handadd" />
-
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:paddingTop="4dp"
-        android:text="我是 我爸爸的兒子"
         android:textColor="#ffffff" />
 
 </LinearLayout>

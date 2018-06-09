@@ -71,70 +71,145 @@
         android:gravity="center_vertical"
         android:layout_alignParentLeft="true">
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/newScreen_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_food"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/newScreen_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_income"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/newScreen_entertainment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_entertainment"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Screen_traffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_traffic"
+                android:textStyle="bold" />
+        </TableRow>
+
         <TableRow android:gravity="center">
 
             <Button
                 android:id="@+id/button_food"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_alignLeft="@+id/button_income"
-                android:text="@string/button_food" />
+                android:background="@drawable/food" />
 
             <Button
                 android:id="@+id/button_income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_alignLeft="@id/button_traffic"
-                android:text="@string/button_income" />
+                android:background="@drawable/income" />
 
             <Button
                 android:id="@+id/button_entertainment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_alignRight="@id/button_traffic"
-                android:text="@string/button_entertainment" />
+                android:background="@drawable/entertainment" />
 
             <Button
                 android:id="@+id/button_traffic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_above="@+id/button_3C"
                 android:layout_centerHorizontal="true"
-                android:text="@string/button_traffic" />
+                android:background="@drawable/traffic" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/Screen_3c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="3C"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_medical"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_house"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_other"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow android:gravity="center">
 
             <Button
                 android:id="@+id/button_3C"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_above="@+id/tableLayout"
-                android:text="3C" />
+                android:background="@drawable/phone" />
 
             <Button
                 android:id="@+id/button_medical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_above="@+id/tableLayout"
                 android:layout_alignEnd="@id/button_traffic"
-                android:text="@string/button_medical"
-                android:layout_alignRight="@id/button_traffic" />
+                android:layout_alignRight="@id/button_traffic"
+                android:background="@drawable/medical" />
 
             <Button
                 android:id="@+id/button_house"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/tableLayout"
-                android:text="@string/button_house" />
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/tableLayout" />
 
             <Button
                 android:id="@+id/button_other"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
                 android:layout_above="@+id/tableLayout"
-                android:text="@string/button_other" />
+                android:background="@drawable/other" />
         </TableRow>
 
         <TableRow android:gravity="center">
@@ -143,19 +218,22 @@
                 android:id="@+id/computer7"
                 android:layout_width="80dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button7" />
+                android:background="@drawable/button7"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer8"
                 android:layout_width="80dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button8" />
+                android:background="@drawable/button8"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer9"
                 android:layout_width="80dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button9" />
+                android:background="@drawable/button9"
+                android:textAllCaps="false" />
 
         </TableRow>
 
@@ -165,19 +243,22 @@
                 android:id="@+id/computer4"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button4" />
+                android:background="@drawable/button4"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer5"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button5" />
+                android:background="@drawable/button5"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer6"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button6" />
+                android:background="@drawable/button6"
+                android:textAllCaps="false" />
 
         </TableRow>
 
@@ -187,19 +268,22 @@
                 android:id="@+id/computer1"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button1" />
+                android:background="@drawable/button1"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer2"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button2" />
+                android:background="@drawable/button2"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer3"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button3" />
+                android:background="@drawable/button3"
+                android:textAllCaps="false" />
 
         </TableRow>
 
@@ -209,19 +293,22 @@
                 android:id="@+id/computerDelete"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/buttondelete" />
+                android:background="@drawable/buttondelete"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computer0"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/button0" />
+                android:background="@drawable/button0"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/computerEnter"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/buttonenter"/>
+                android:background="@drawable/buttonenter"
+                android:textAllCaps="false" />
         </TableRow>
 
     </TableLayout>

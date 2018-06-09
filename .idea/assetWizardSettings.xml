@@ -18,7 +18,8 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png" />
+                                      <entry key="backgroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\drawable\ic_launcher.png" />
+                                      <entry key="foregroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\drawable\ic_launcher.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -1,6 +1,7 @@
 package tw.edu.niu.keepmoney20;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,10 +22,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.lang.String;
 
-public class NewScreen extends AppCompatActivity{
+public class NewScreen extends Activity {
 //#################網路資料庫的 MySQL#########################
 //############################################################
-
 
 //#################網路資料庫的 MySQL#########################
     String google_token="fox850907";
@@ -33,8 +33,6 @@ public class NewScreen extends AppCompatActivity{
 
     int mYear, mMonth ,mDay;
 //############################################################
-
-
 
 
     private static String DATABASE_TABLE = "money";
@@ -51,8 +49,6 @@ public class NewScreen extends AppCompatActivity{
     private void findViews(){
         txtDate = (TextView)findViewById(R.id.textView);
         output = (TextView)findViewById(R.id.textViewshow);
-        //edtPrice = (EditText)findViewById(R.id.editText);
-        //edtCategory = (EditText)findViewById(R.id.editText2);
     }
 //#################網路資料庫的 MySQL#########################
     private void thread(final String jsonsql, final String key){
@@ -180,10 +176,7 @@ public class NewScreen extends AppCompatActivity{
         button_o = findViewById(R.id.button_other);
         button_o.setOnClickListener(btnListener);
         textViewcate = findViewById(R.id.textCategory);
-
     }
-
-
 
     private  Button.OnClickListener btnListener = new Button.OnClickListener(){
         public void onClick(View V){

@@ -1,5 +1,6 @@
 package tw.edu.niu.keepmoney20;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -19,7 +20,7 @@ import java.util.Calendar;
 import im.dacer.androidcharts.PieHelper;
 import im.dacer.androidcharts.PieView;
 
-public class menu_account extends AppCompatActivity {
+public class menu_account extends Activity {
 //#################網路資料庫的 MySQL#########################
     ListView lv;
     String google_token="fox850907";

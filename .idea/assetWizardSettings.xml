@@ -18,23 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\drawable\logo.png" />
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\drawable\logo.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="icon" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="launcherLegacy">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\drawable\logo.png" />
+                                      <entry key="foregroundImage" value="C:\Users\Bigdata_lab\Desktop\KeepMoney20\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

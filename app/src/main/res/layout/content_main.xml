@@ -21,34 +21,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="26dp"
         android:onClick="startDate"
         android:text="時間顯示"
         android:textSize="30sp" />
 
     <ImageButton
         android:id="@+id/VoiceEnter"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_width="117dp"
+        android:layout_height="106dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:scaleType="fitCenter"
+        android:layout_marginBottom="24dp"
         android:background="@null"
         android:clickable="true"
         android:padding="16dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/voicemic" />
-
-    <ImageButton
-        android:id="@+id/ManuallyButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:background="@null"
-        android:padding="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/handadd" />
 
     <TextView
         android:id="@+id/showsay"
@@ -61,12 +50,24 @@
 
     <ListView
         android:id="@+id/content_main_listview"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:layout_above="@+id/VoiceEnter"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/showDate"
-        android:layout_marginTop="16dp" />
+        android:layout_width="317dp"
+        android:layout_height="310dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="87dp" />
+
+    <ImageButton
+        android:id="@+id/ManuallyButton"
+        android:layout_width="163dp"
+        android:layout_height="158dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        android:clickable="true"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/handadd"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -32,5 +33,4 @@ dependencies {
 
     //圓餅圖
     implementation 'im.dacer:AndroidCharts:1.0.4'
-
 }

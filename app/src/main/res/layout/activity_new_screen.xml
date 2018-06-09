@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:onClick="setDate"
-        android:text="日期"
+        android:text="@string/data"
         android:textSize="30sp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_marginTop="17dp"
         android:layout_toLeftOf="@+id/textPrice"
         android:layout_toStartOf="@+id/textPrice"
-        android:text="分類"
+        android:text="@string/category"
         android:textSize="30sp" />
 
     <TextView
@@ -65,10 +65,77 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="352dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_vertical">
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true">
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/button_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/button_income"
+                android:text="@string/button_food" />
+
+            <Button
+                android:id="@+id/button_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/button_traffic"
+                android:text="@string/button_income" />
+
+            <Button
+                android:id="@+id/button_entertainment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/button_traffic"
+                android:text="@string/button_entertainment" />
+
+            <Button
+                android:id="@+id/button_traffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/button_3C"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_traffic" />
+
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/button_3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tableLayout"
+                android:text="3C" />
+
+            <Button
+                android:id="@+id/button_medical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tableLayout"
+                android:layout_alignEnd="@id/button_traffic"
+                android:text="@string/button_medical"
+                android:layout_alignRight="@id/button_traffic" />
+
+            <Button
+                android:id="@+id/button_house"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tableLayout"
+                android:text="@string/button_house" />
+
+            <Button
+                android:id="@+id/button_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tableLayout"
+                android:text="@string/button_other" />
+        </TableRow>
 
         <TableRow android:gravity="center">
 
@@ -154,8 +221,9 @@
                 android:id="@+id/computerEnter"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
-                android:background="@drawable/buttonenter" />
+                android:background="@drawable/buttonenter"/>
         </TableRow>
+
     </TableLayout>
 
     <TextView
@@ -166,5 +234,16 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tv_google_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:text="fox850907"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="14dp" />
 
 </RelativeLayout>

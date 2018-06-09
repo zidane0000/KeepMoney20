@@ -1,13 +1,20 @@
 package tw.edu.niu.keepmoney20;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +22,20 @@ import java.util.Date;
 import java.lang.String;
 
 public class NewScreen extends AppCompatActivity{
+//#################網路資料庫的 MySQL#########################
+//############################################################
+
+
+//#################網路資料庫的 MySQL#########################
+    String google_token="fox850907";
+    String whichDate;
+    String[] id,ntd,google_id,dates,category,ans;
+
+    int mYear, mMonth ,mDay;
+//############################################################
+
+
+
 
     private static String DATABASE_TABLE = "money";
     private SQLiteDatabase db;
@@ -22,20 +43,10 @@ public class NewScreen extends AppCompatActivity{
 
     private TextView txtDate, output;
 
-
-    private Button button0;
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
-    private Button button5;
-    private Button button6;
-    private Button button7;
-    private Button button8;
-    private Button button9;
-    private Button buttonDelete;
-    private Button buttonEnter;
-    private  TextView howmuch;
+    private Button button0,button1,button2,button3,button4,button5,button6;
+    private Button button7,button8,button9,buttonDelete,buttonEnter;
+    private Button button_f,button_i,button_3,button_m,button_e,button_t,button_o,button_h;
+    private  TextView howmuch,textViewcate;
 
     private void findViews(){
         txtDate = (TextView)findViewById(R.id.textView);
@@ -43,24 +54,86 @@ public class NewScreen extends AppCompatActivity{
         //edtPrice = (EditText)findViewById(R.id.editText);
         //edtCategory = (EditText)findViewById(R.id.editText2);
     }
+//#################網路資料庫的 MySQL#########################
+    private void thread(final String jsonsql, final String key){
+        new Thread(){
+            Json js = new Json();
+            @Override
+            public void run() {
+                super.run();
+                try{
+                    String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
 
+                    //把每一欄 存近來
+//                    if(key!=null){
+//                        id =js.jsonkey(sql, "id");
+//                        google_id =js.jsonkey(sql, "google_id");
+//                        dates =js.jsonkey(sql, "date");
+//                        ntd =js.jsonkey(sql, "ntd");
+//                        category =js.jsonkey(sql, "category");
+//                        ans=js.jsonkey(sql,"ans");
+//                    }
+//                    handler.sendEmptyMessage(0);   //呼叫handler
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //這是為了方便 新增 修改 刪除後 在顯示一次 lv
+//            if(b){
+//                thread("SELECT * FROM `test`", "ans");   // WHERE studentid = 'aa'
+//                b=false;
+//            }else{
+//                howmuch.setText("");
+//                b=true;
+//            }
+
+        }
+    };
+//############################################################
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_screen);
         findViews();
 
+//#####################################################################################
         //程式進入就顯示今天日期
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年M月d日");
         Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
         String str = formatter.format(curDate);
         txtDate.setText(str);
+        //取得當天的日期
+        Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        String tmpM,tmpD;
+        if( (mMonth+1)<10 ){
+            tmpM="0"+ Integer.toString(mMonth+1);
+        }else{
+            tmpM= Integer.toString(mMonth+1);
+        }
+        if( (mDay)<10 ){
+            tmpD="0"+ Integer.toString(mDay);
+        }else{
+            tmpD= Integer.toString(mDay);
+        }
+        whichDate=Integer.toString(mYear) + tmpM + tmpD;
+//############################################################################
+
 
         //SQLite資料庫
         dbHelper = new StdDBHelper(this);
         db = dbHelper.getWritableDatabase();
         output.setText("資料庫是否開啟：" + db.isOpen() + "\n資料庫版本：" + db.getVersion());
 
+        //輸入金錢
         button0 = (Button) findViewById(R.id.computer0);
         button0.setOnClickListener(btnListener);
         button1 = (Button) findViewById(R.id.computer1);
@@ -85,9 +158,32 @@ public class NewScreen extends AppCompatActivity{
         buttonDelete.setOnClickListener(btnListener);
         buttonEnter = (Button) findViewById(R.id.computerEnter);
         buttonEnter.setOnClickListener(btnListener);
+
         howmuch = (TextView) findViewById(R.id.textPrice);
 
+
+        //種類
+        button_f = findViewById(R.id.button_food);
+        button_f.setOnClickListener(btnListener);
+        button_i = findViewById(R.id.button_income);
+        button_i.setOnClickListener(btnListener);
+        button_t = findViewById(R.id.button_traffic);
+        button_t.setOnClickListener(btnListener);
+        button_e = findViewById(R.id.button_entertainment);
+        button_e.setOnClickListener(btnListener);
+        button_h = findViewById(R.id.button_house);
+        button_h.setOnClickListener(btnListener);
+        button_3 = findViewById(R.id.button_3C);
+        button_3.setOnClickListener(btnListener);
+        button_m = findViewById(R.id.button_medical);
+        button_m.setOnClickListener(btnListener);
+        button_o = findViewById(R.id.button_other);
+        button_o.setOnClickListener(btnListener);
+        textViewcate = findViewById(R.id.textCategory);
+
     }
+
+
 
     private  Button.OnClickListener btnListener = new Button.OnClickListener(){
         public void onClick(View V){
@@ -149,7 +245,41 @@ public class NewScreen extends AppCompatActivity{
                     if(howmuchstr.length()>0)howmuch.setText(howmuchstr.substring(0,howmuch.length()-1));
                     break;
                 case R.id.computerEnter:
+//#################網路資料庫的 MySQL#########################
+                    String s1="INSERT INTO `test`(`google_id`,`date`,`ntd`,`category`,`ans`) VALUES (";
+                    String s2=")";
+                    String sANS = textViewcate.getText().toString() + "，花了" + howmuch.getText().toString() + "元";
+                    String x = "'" + google_token + "'," + "'" + whichDate + "'," + "'" + howmuch.getText().toString() + "'," + "'" + textViewcate.getText().toString() + "'," + "'" + sANS + "'" ;
+                    if(!howmuch.getText().toString().equals("")){   //如果框框裡有文字
+                        thread(s1+ x +s2, "");   //新增資料所以key值空的
+                        Toast.makeText(NewScreen.this,"新增成功",Toast.LENGTH_LONG).show();
+                        howmuch.setText("");
+                        textViewcate.setText("");
+                    }
 
+                    Intent intent = new Intent(NewScreen.this,MainActivity.class);
+                    intent.putExtra("ADD_NEW","OK");
+                    startActivity(intent);    //?重開acticity1
+                    NewScreen.this.finish();
+//############################################################
+                    break;
+                case R.id.button_food:
+                    textViewcate.setText("食物");break;
+                case R.id.button_income:
+                    textViewcate.setText("收入");break;
+                case R.id.button_traffic:
+                    textViewcate.setText("交通");break;
+                case R.id.button_entertainment:
+                    textViewcate.setText("娛樂");break;
+                case R.id.button_house:
+                    textViewcate.setText("居家");break;
+                case R.id.button_3C:
+                    textViewcate.setText("3C");break;
+                case R.id.button_medical:
+                    textViewcate.setText("醫療");break;
+                case R.id.button_other:
+                    textViewcate.setText("其他");break;
+                default:break;
             }
         }
     };
@@ -165,9 +295,22 @@ public class NewScreen extends AppCompatActivity{
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 txtDate.setText(year+"年"+(month+1) + "月" + day + "日");
+                String tmpM,tmpD;
+                if( (month+1)<10 ){
+                    tmpM="0"+ Integer.toString(month+1);
+                }else{
+                    tmpM= Integer.toString(month+1);
+                }
+                if( (day)<10 ){
+                    tmpD="0"+ Integer.toString(day);
+                }else{
+                    tmpD= Integer.toString(day);
+                }
+                whichDate=Integer.toString(year) + tmpM + tmpD;
             }
         }, mYear, mMonth, mDay).show();
     }
+
 
 //    public void submit_click(View view) {
 //        long id;

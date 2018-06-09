@@ -65,23 +65,25 @@
 
     <Button
         android:id="@+id/gotoLeft"
-        android:layout_width="50dp"
+        android:layout_width="72dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/pie_view"
-        android:layout_marginTop="72dp"
-        android:layout_toLeftOf="@+id/account_income"
-        android:layout_toStartOf="@+id/account_income"
-        android:text="LF" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="107dp"
+        android:onClick="LF"
+        android:text="上個月"
+        android:layout_marginLeft="14dp"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/gotoRight"
-        android:layout_width="50dp"
+        android:layout_width="69dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/gotoLeft"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_toEndOf="@+id/pie_view"
-        android:layout_toRightOf="@+id/pie_view"
-        android:text="RH" />
+        android:onClick="RH"
+        android:text="下個月"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -1,8 +1,17 @@
 <resources>
-    <string name="app_name">我販劍你製帳</string>
+    <string name="app_name">Oner Manager</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="button_entertainment">娛樂</string>
+    <string name="button_traffic">交通</string>
+    <string name="button_food">食物</string>
+    <string name="button_house">居家</string>
+    <string name="button_medical">醫療</string>
+    <string name="button_other" >其他</string>
+    <string name="button_income">收入</string>
+    <string name="category">分類</string>
+    <string name="data">日期</string>
 </resources>

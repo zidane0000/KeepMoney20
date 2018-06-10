@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "248491535792",
+    "firebase_url": "https://forapp-206412.firebaseio.com",
+    "project_id": "forapp-206412",
+    "storage_bucket": "forapp-206412.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248491535792:android:530cb41f8af0afbc",
+        "android_client_info": {
+          "package_name": "tw.edu.niu.keepmoney20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248491535792-tp7ckgs9qbbv7ptl1t0ec1ub1b01hed1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "248491535792-t0lcrj75ln7oiribran5uqvhf1f9ri3n.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "248491535792-g4mquji47hhguf75vq1jqlp871o83ok6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tw.edu.niu.keepmoney20",
+            "certificate_hash": "81118d8dd330f10f052f85d5ebcf9b1672f464fb"
+          }
+        },
+        {
+          "client_id": "248491535792-t0lcrj75ln7oiribran5uqvhf1f9ri3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQrR-Vn1e2VZZgMRasnz6dTJvlFtIEOVo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248491535792-tp7ckgs9qbbv7ptl1t0ec1ub1b01hed1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

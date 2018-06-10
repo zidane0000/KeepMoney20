@@ -4,6 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="google_status_fmt"></string>
+
     <string name="action_settings">Settings</string>
     <string name="button_entertainment">娛樂</string>
     <string name="button_traffic">交通</string>
@@ -14,4 +16,9 @@
     <string name="button_income">收入</string>
     <string name="category">分類</string>
     <string name="data">日期</string>
+    <string name="homepage">首頁</string>
+    <string name="Account">帳戶</string>
+    <string name="About">關於</string>
+    <string name="Share">分享</string>
+    <string name="Evaluation">評價</string>
 </resources>

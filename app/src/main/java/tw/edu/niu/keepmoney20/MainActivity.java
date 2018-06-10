@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,20 +22,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
+
 //#################網路資料庫的 MySQL#########################
 //############################################################
 
@@ -62,6 +82,17 @@ public class MainActivity extends AppCompatActivity
     RelativeLayout remenu_account;
     RelativeLayout remenu_about;
 
+    //Google Login
+    private FirebaseAuth mAuth;
+    private static final String TAG = "You got an error";
+    GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 428;
+    SignInButton mSignButton;
+    TextView mGoogleAccountName;
+
+    //左拉選單
+    Button button_homepage,button_account,button_about,button_share,button_evaluation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
@@ -74,7 +105,6 @@ public class MainActivity extends AppCompatActivity
         remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
         remenu_account=(RelativeLayout)findViewById(R.id.menu_account);
         textView = (TextView)findViewById(R.id.showDate);
-
 
 //#######################左拉選單##################################################
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,8 +119,6 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 //##################################################################################
 
 
@@ -176,10 +204,100 @@ public class MainActivity extends AppCompatActivity
         lv = findViewById(R.id.content_main_listview);
         thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "ans");
 //############################################################
+
+        //Google login
+        mGoogleAccountName = findViewById(R.id.txtHeader);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            String uid = user.getUid();
+            mGoogleAccountName.setText(uid);
+        }else{
+            // Configure sign-in to request the user's ID, email address, and basic
+            // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            // Build a GoogleSignInClient with the options specified by gso.
+            mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+            mSignButton = (SignInButton) findViewById(R.id.sign_in_button);
+            mSignButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.sign_in_button:
+                            signIn();
+                            break;
+                    }
+                }
+            });
+        }
+
+
+        button_homepage = findViewById(R.id.homepage);
+        button_homepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "首頁" ,Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        });
+        button_account = findViewById(R.id.account);
+        button_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_account.class);
+                abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(abbody_account);
+                Toast.makeText(MainActivity.this, "帳戶" ,Toast.LENGTH_LONG).show();
+            }
+        });
+        button_about = findViewById(R.id.about);
+        button_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_about.class);
+                abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(abbody_account);
+                Toast.makeText(MainActivity.this, "關於" ,Toast.LENGTH_LONG).show();
+            }
+        });
+        button_share = findViewById(R.id.share);
+        button_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareintent = new Intent(Intent.ACTION_SEND);
+                shareintent.setType("text/plain");
+                String shareBody = "Your body here";
+                String shareSub = "Your Subject here";
+                shareintent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                shareintent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(shareintent, "分享至"));
+            }
+        });
+        button_evaluation = findViewById(R.id.evaluation);
+        button_evaluation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri urishareaddress = Uri.parse(EvaluationAddress);
+                Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
+                startActivity(shareus);
+            }
+        });
+
     }
 
-
-    @Override//左拉選單ㄉ
+   @Override//左拉選單ㄉ
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -192,12 +310,12 @@ public class MainActivity extends AppCompatActivity
     @Override//左拉選單的設定
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @Override//左拉選單ㄉ
+    /*
+    @Override//左拉選單
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -210,51 +328,29 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }*/
+
+    private  void signIn()
+    {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")//左拉選單ㄉ
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Toast.makeText(this, "首頁" ,Toast.LENGTH_LONG).show();
-        } else if (id == R.id.nav_account) {
-
-            Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_account.class);
-            abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(abbody_account);
-            Toast.makeText(this, "帳戶" ,Toast.LENGTH_LONG).show();
-
-        }else if (id == R.id.nav_about) {
-
-            Intent abbody_account = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.menu_about.class);
-            abbody_account.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(abbody_account);
-            Toast.makeText(this, "關於" ,Toast.LENGTH_LONG).show();
-
-        }else if (id == R.id.nav_share) {
-
-            Intent shareintent = new Intent(Intent.ACTION_SEND);
-            shareintent.setType("text/plain");
-            String shareBody = "Your body here";
-            String shareSub = "Your Subject here";
-            shareintent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
-            shareintent.putExtra(Intent.EXTRA_TEXT,shareBody);
-            startActivity(Intent.createChooser(shareintent, "分享至"));
-
-        }else if (id == R.id.nav_evaluation) {
-            Uri urishareaddress = Uri.parse(EvaluationAddress);
-            Intent shareus=new Intent(Intent.ACTION_VIEW,urishareaddress);
-            startActivity(shareus);
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            mGoogleAccountName.setText(user.getEmail());
+            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
 
     //設定時間
      public void startDate(View view) {
@@ -317,11 +413,50 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             }
+        case RC_SIGN_IN:{
+                // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+                if (requestCode == RC_SIGN_IN) {
+                    // The Task returned from this call is always completed, no need to attach
+                    // a listener.
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    try {
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        firebaseAuthWithGoogle(account);
+                    } catch (ApiException e) {
+                        e.printStackTrace();
+                        updateUI(null);
+                    }
+                }
+            }
         }
     }
 
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        // [START_EXCLUDE silent]
+        // [END_EXCLUDE]
 
-//#########################網路資料庫###########################
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Snackbar.make(findViewById(R.id.drawer_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    //#########################網路資料庫###########################
     private void thread(final String jsonsql, final String key){
         new Thread(){
             Json js = new Json();

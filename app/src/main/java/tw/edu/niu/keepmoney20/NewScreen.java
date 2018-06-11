@@ -23,21 +23,20 @@ import java.util.Date;
 import java.lang.String;
 
 public class NewScreen extends Activity {
-//#################網路資料庫的 MySQL#########################
-//############################################################
 
-//#################網路資料庫的 MySQL#########################
-    String google_token="fox850907";
+    //#########################網路資料庫的 MySQL##################################
+    String google_token="offline";
     String whichDate;
-    String[] id,ntd,google_id,dates,category,ans;
 
     int mYear, mMonth ,mDay;
-//############################################################
+//#############################################################################
 
 
+//##############################離線SQLite#####################################
     private static String DATABASE_TABLE = "money";
     private SQLiteDatabase db;
     private StdDBHelper dbHelper;
+//#############################################################################
 
     private TextView txtDate, output;
 
@@ -46,88 +45,43 @@ public class NewScreen extends Activity {
     private Button button_f,button_i,button_3,button_m,button_e,button_t,button_o,button_h;
     private  TextView howmuch,textViewcate;
 
-    private void findViews(){
-        txtDate = (TextView)findViewById(R.id.textView);
-        output = (TextView)findViewById(R.id.textViewshow);
-    }
-//#################網路資料庫的 MySQL#########################
-    private void thread(final String jsonsql, final String key){
-        new Thread(){
-            Json js = new Json();
-            @Override
-            public void run() {
-                super.run();
-                try{
-                    String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
 
-                    //把每一欄 存近來
-//                    if(key!=null){
-//                        id =js.jsonkey(sql, "id");
-//                        google_id =js.jsonkey(sql, "google_id");
-//                        dates =js.jsonkey(sql, "date");
-//                        ntd =js.jsonkey(sql, "ntd");
-//                        category =js.jsonkey(sql, "category");
-//                        ans=js.jsonkey(sql,"ans");
-//                    }
-//                    handler.sendEmptyMessage(0);   //呼叫handler
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            //這是為了方便 新增 修改 刪除後 在顯示一次 lv
-//            if(b){
-//                thread("SELECT * FROM `test`", "ans");   // WHERE studentid = 'aa'
-//                b=false;
-//            }else{
-//                howmuch.setText("");
-//                b=true;
-//            }
 
-        }
-    };
-//############################################################
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_screen);
-        findViews();
+        txtDate = (TextView)findViewById(R.id.textView);
+        output = (TextView)findViewById(R.id.textViewshow);
 
-//#####################################################################################
+//#############################網路SQL#########################################
         //程式進入就顯示今天日期
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年M月d日");
         Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
         String str = formatter.format(curDate);
         txtDate.setText(str);
-        //取得當天的日期
+        //取得今天的日期
         Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        //解決201869變成20180609
         String tmpM,tmpD;
-        if( (mMonth+1)<10 ){
-            tmpM="0"+ Integer.toString(mMonth+1);
-        }else{
-            tmpM= Integer.toString(mMonth+1);
-        }
-        if( (mDay)<10 ){
-            tmpD="0"+ Integer.toString(mDay);
-        }else{
-            tmpD= Integer.toString(mDay);
-        }
-        whichDate=Integer.toString(mYear) + tmpM + tmpD;
+        if( (mMonth+1)<10 ){ tmpM="0"+ Integer.toString(mMonth+1); }
+        else{ tmpM= Integer.toString(mMonth+1); }
+        if( (mDay)<10 ){ tmpD="0"+ Integer.toString(mDay); }
+        else{ tmpD= Integer.toString(mDay); }
+
+        whichDate=Integer.toString(mYear) + tmpM + tmpD;  //程式一開始顯示今天的日期 以便刷新今天的lv
 //############################################################################
 
 
-        //SQLite資料庫
+//#########################SQLite資料庫#######################################
         dbHelper = new StdDBHelper(this);
         db = dbHelper.getWritableDatabase();
         output.setText("資料庫是否開啟：" + db.isOpen() + "\n資料庫版本：" + db.getVersion());
+//############################################################################
 
         //輸入金錢
         button0 = (Button) findViewById(R.id.computer0);
@@ -238,23 +192,23 @@ public class NewScreen extends Activity {
                     if(howmuchstr.length()>0)howmuch.setText(howmuchstr.substring(0,howmuch.length()-1));
                     break;
                 case R.id.computerEnter:
-//#################網路資料庫的 MySQL#########################
+//###############################網路資料庫的 MySQL#################################
                     String s1="INSERT INTO `test`(`google_id`,`date`,`ntd`,`category`,`ans`) VALUES (";
                     String s2=")";
-                    String sANS = textViewcate.getText().toString() + "，花了" + howmuch.getText().toString() + "元";
-                    String x = "'" + google_token + "'," + "'" + whichDate + "'," + "'" + howmuch.getText().toString() + "'," + "'" + textViewcate.getText().toString() + "'," + "'" + sANS + "'" ;
-                    if(!howmuch.getText().toString().equals("")){   //如果框框裡有文字
-                        thread(s1+ x +s2, "");   //新增資料所以key值空的
+                    String x = "'" + google_token + "'," + "'" + whichDate + "'," + "'" + howmuch.getText().toString() + "'," + "'" + textViewcate.getText().toString() + "'," + "'" + "預刪除ans欄位" + "'" ;
+                    if(! (howmuch.getText().toString().equals("")|| textViewcate.getText().toString().equals("")) ){   //如果框框裡有文字
+                        thread(s1+ x +s2, "insert");   //新增資料所以key值空的
                         Toast.makeText(NewScreen.this,"新增成功",Toast.LENGTH_LONG).show();
                         howmuch.setText("");
                         textViewcate.setText("");
+                        Intent intent = new Intent(NewScreen.this,MainActivity.class);
+                        intent.putExtra("ADD_NEW","OK");
+                        startActivity(intent);    //?重開acticity1
+                        NewScreen.this.finish();
+                    }else{
+                        Toast.makeText(NewScreen.this,"輸入不完整，請重新輸入",Toast.LENGTH_SHORT).show();
                     }
-
-                    Intent intent = new Intent(NewScreen.this,MainActivity.class);
-                    intent.putExtra("ADD_NEW","OK");
-                    startActivity(intent);    //?重開acticity1
-                    NewScreen.this.finish();
-//############################################################
+//#################################################################################
                     break;
                 case R.id.button_food:
                     textViewcate.setText("食物");break;
@@ -278,30 +232,39 @@ public class NewScreen extends Activity {
     };
 
     public void setDate(View view) {
-        Calendar c = Calendar.getInstance();
-        int mYear, mMonth, mDay;
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
         new DatePickerDialog(
                 NewScreen.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 txtDate.setText(year+"年"+(month+1) + "月" + day + "日");
                 String tmpM,tmpD;
-                if( (month+1)<10 ){
-                    tmpM="0"+ Integer.toString(month+1);
-                }else{
-                    tmpM= Integer.toString(month+1);
-                }
-                if( (day)<10 ){
-                    tmpD="0"+ Integer.toString(day);
-                }else{
-                    tmpD= Integer.toString(day);
-                }
+                if( (month+1)<10 ){ tmpM="0"+ Integer.toString(month+1); }
+                else{ tmpM= Integer.toString(month+1); }
+                if( (day)<10 ){ tmpD="0"+ Integer.toString(day); }
+                else{ tmpD= Integer.toString(day); }
                 whichDate=Integer.toString(year) + tmpM + tmpD;
+
+                //改寫下一次點到進入開始的日期
+                mYear=year; mMonth=month; mDay=day;
             }
         }, mYear, mMonth, mDay).show();
+    }
+
+
+//#################網路資料庫的 MySQL#########################
+    private void thread(final String jsonsql, final String key){
+        new Thread(){
+            Json js = new Json();
+            @Override
+            public void run() {
+                super.run();
+                try{
+                    if(key=="insert"){
+                        String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
+                    }
+                }catch (Exception e){ e.printStackTrace(); }
+            }
+        }.start();
     }
 
 

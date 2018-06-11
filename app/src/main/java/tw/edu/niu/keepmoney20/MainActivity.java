@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -53,17 +54,15 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-//#################網路資料庫的 MySQL#########################
-//############################################################
-
-//#################記帳主體___網路資料庫MySQL#########################
+    //#################記帳主體___網路資料庫MySQL#########################
     String google_token="offline";   //用這來判斷是否google同步
     String[] id,ntd,google_id,dates,category,ans;   //接收 SQL語法取得後的資料
-    String[] testANS;  //lv顯示的結果
-    int i;  //listviews紀錄點到哪個
-    boolean begin_lv =true;  //因為用thread while(true)  這個個來判斷已經跑一遍惹
 
     ListView lv;
+    String[] lvShowArray;  //lv顯示的結果
+    boolean begin_lv =true;  //因為用thread while(true)  這個個來判斷已經跑一遍惹
+
+    int i;  //listviews紀錄點到哪個
 
     //日期處理
     String whichDate;   //查詢哪天
@@ -88,64 +87,44 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 428;
     SignInButton mSignButton;
+    Button mSignOutButton;
     TextView mGoogleAccountName;
+    ImageView mGoogleuserURI;
 
     //左拉選單
     Button button_homepage,button_account,button_about,button_share,button_evaluation;
 
+
+//##############################onCreate開始###################################################################
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.activity_main);
 
-        //強制鎖定為直屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+//#################################基本進入設定#####################################
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //強制鎖定為直屏
         remenu_home = (RelativeLayout) findViewById(R.id.main);
         remenu_about= (RelativeLayout) findViewById(R.id.menu_about);
         remenu_account=(RelativeLayout)findViewById(R.id.menu_account);
         textView = (TextView)findViewById(R.id.showDate);
+//##################################################################################
 
-//#######################左拉選單##################################################
+//##################################左拉選單########################################
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
 //##################################################################################
 
 
-////################舊的listview##########################
-//        // 準備資料，塞3個項目到ArrayList裡
-//        for(int i = 0; i < 3; i++) {
-//            tohome_listview_data.add("項目"+i);
-//        }
-//        /* 初始Adapter
-//        *  第一個參數context
-//        *  第二個參數是列的外觀，這邊用android內建的
-//        *  第三個參數是要顯示的資料，即上面準備好的mData
-//        */
-//        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tohome_listview_data);
-//        // 連結元件
-//        tohome_listView = (ListView) findViewById(R.id.content_main_listview);
-//        // 設置adapter給listview
-//        tohome_listView.setAdapter(adapter);
-//
-////        // 塞項目到ArrayList
-////        tohome_listview_data.add("項目");
-////        adapter.notifyDataSetChanged();
-//############################################################
-
-
-
-        //語音處理輸入部分
+//##############################語音處理輸入部分####################################
         voiceaddto = (ImageButton) findViewById(R.id.VoiceEnter);
         voiceaddto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,88 +140,86 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         saywhat = (TextView) findViewById(R.id.showsay);
+//##################################################################################
 
 
-        //手動新增頁面
+//##########################手動新增頁面############################################
         handaddto = (ImageButton) findViewById(R.id.ManuallyButton);
         handaddto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //至新增的畫面
-                Intent gotoNewScreen = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.NewScreen.class);
-                gotoNewScreen.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(gotoNewScreen);
+                //至新增的畫面 Li
+//                Intent gotoNewScreen = new Intent(MainActivity.this, tw.edu.niu.keepmoney20.NewScreen.class);
+//                gotoNewScreen.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivity(gotoNewScreen);
+
+                //corgi
+                Intent intent = new Intent(MainActivity.this,NewScreen.class);
+//                intent.putExtra("ADD_NEW","OK");
+                startActivity(intent);    //?重開acticity1
+                MainActivity.this.finish();
             }
         });
+//##################################################################################
 
 
-//#################網路資料庫的 MySQL#########################
+//################################網路資料庫的 MySQL################################
         //程式進入就顯示今天日期
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年M月d日");
         Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
         String str = formatter.format(curDate);
         textView.setText(str);
-        //取得當天的日期
+        //取得今天的日期
         Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        String tmpM,tmpD;
-        if( (mMonth+1)<10 ){
-            tmpM="0"+ Integer.toString(mMonth+1);
-        }else{
-            tmpM= Integer.toString(mMonth+1);
-        }
-        if( (mDay)<10 ){
-            tmpD="0"+ Integer.toString(mDay);
-        }else{
-            tmpD= Integer.toString(mDay);
-        }
-        whichDate=Integer.toString(mYear) + tmpM + tmpD;
 
+        //解決201869變成20180609
+        String tmpM,tmpD;
+        if( (mMonth+1)<10 ){ tmpM="0"+ Integer.toString(mMonth+1); }
+        else{ tmpM= Integer.toString(mMonth+1); }
+        if( (mDay)<10 ){ tmpD="0"+ Integer.toString(mDay); }
+        else{ tmpD= Integer.toString(mDay); }
+
+        whichDate=Integer.toString(mYear) + tmpM + tmpD;  //程式一開始顯示今天的日期 以便刷新今天的lv
 
         lv = findViewById(R.id.content_main_listview);
-        thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "ans");
-//############################################################
+
+        //程式一開始先刷新lv
+        begin_lv=true;
+        thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "date");
+//##################################################################################
 
         //Google login
         mGoogleAccountName = findViewById(R.id.txtHeader);
+        mGoogleuserURI = findViewById(R.id.userImaage);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getToken() instead.
-            String uid = user.getUid();
-            mGoogleAccountName.setText(uid);
-        }else{
-            // Configure sign-in to request the user's ID, email address, and basic
-            // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
-            // Build a GoogleSignInClient with the options specified by gso.
-            mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-            mSignButton = (SignInButton) findViewById(R.id.sign_in_button);
-            mSignButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.sign_in_button:
-                            signIn();
-                            break;
-                    }
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+        mSignButton = (SignInButton) findViewById(R.id.sign_in_button);
+        mSignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.sign_in_button:
+                        signIn();
+                        break;
                 }
-            });
-        }
-
+            }
+        });
+        mSignOutButton = (Button) findViewById(R.id.sign_out_buton);
+        mSignOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
 
         button_homepage = findViewById(R.id.homepage);
         button_homepage.setOnClickListener(new View.OnClickListener() {
@@ -294,7 +271,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(shareus);
             }
         });
-
     }
 
    @Override//左拉選單ㄉ
@@ -336,12 +312,30 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+        Toast.makeText(MainActivity.this, "有按到" ,Toast.LENGTH_LONG).show();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        updateUI(null);
+                    }
+                });
+    }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             mGoogleAccountName.setText(user.getEmail());
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+            findViewById(R.id.sign_out_buton).setVisibility(View.VISIBLE);
         } else {
+            mGoogleAccountName.setText(null);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_out_buton).setVisibility(View.GONE);
         }
     }
 
@@ -352,37 +346,31 @@ public class MainActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    //設定時間
-     public void startDate(View view) {
+    //##############################換其他日期 function 開始#######################################################
+    public void startDate(View view) {
         new DatePickerDialog(
                 MainActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 textView.setText(year+"年"+(month+1) + "月" + day + "日");
                 String tmpM,tmpD;
-                if( (month+1)<10 ){
-                    tmpM="0"+ Integer.toString(month+1);
-                }else{
-                    tmpM= Integer.toString(month+1);
-                }
-                if( (day)<10 ){
-                    tmpD="0"+ Integer.toString(day);
-                }else{
-                    tmpD= Integer.toString(day);
-                }
+                if( (month+1)<10 ){ tmpM="0"+ Integer.toString(month+1); }
+                else{ tmpM= Integer.toString(month+1); }
+                if( (day)<10 ){ tmpD="0"+ Integer.toString(day); }
+                else{ tmpD= Integer.toString(day); }
                 whichDate=Integer.toString(year) + tmpM + tmpD;
-                begin_lv=true;
-                thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "ans");
 
+                begin_lv=true;  //刷新前要先設定 true
+                thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "date");
                 //改寫下一次點到進入開始的日期
                 mYear=year; mMonth=month; mDay=day;
             }
         }, mYear, mMonth, mDay).show();
-
     }
+//##############################設定時間 function 結束#########################################################
 
 
-    //語音講話結果
+//##############################語音講話結果 function 開始#####################################################
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -394,39 +382,32 @@ public class MainActivity extends AppCompatActivity {
                     saywhat.setText(result.get(0));
                     String analysisVoiceResult=result.get(0);
 
+                    Toast.makeText(MainActivity.this,analysisVoiceResult,Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(MainActivity.this,analysisVoiceResult,Toast.LENGTH_LONG).show();
-//                    把結果存入網路SQL
+                    //把結果存入網路SQL
                     String s1="INSERT INTO `test`(`google_id`,`date`,`ntd`,`category`,`ans`) VALUES (";
                     String s2=")";
-                    String sANS = analysisVoiceResult.substring(0,2) + "，花了" + analysisVoiceResult.substring(2) ;
-                    String x = "'" + google_token + "'," + "'" + whichDate + "'," + "'" + analysisVoiceResult.substring(0,2) + "'," + "'" + analysisVoiceResult.substring(2) + "'," + "'" + sANS + "'" ;
+                    String x = "'" + google_token + "'," + "'" + whichDate + "'," + "'" + analysisVoiceResult.substring(2,analysisVoiceResult.length()-1) + "'," + "'" + analysisVoiceResult.substring(0,2) + "'," + "'" + "預刪除ans欄位" + "'" ;
 
                     begin_lv=true;
-                    thread(s1+x+s2,"");
-                    Toast.makeText(MainActivity.this,"新增成功",Toast.LENGTH_LONG).show();
-
-                    //存完刷新lv
-                    begin_lv=true;
-                    thread("SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'" , "ans");
-
+                    thread(s1+x+s2,"insert");
                 }
                 break;
             }
-        case RC_SIGN_IN:{
-                // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-                if (requestCode == RC_SIGN_IN) {
-                    // The Task returned from this call is always completed, no need to attach
-                    // a listener.
-                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                    try {
-                        GoogleSignInAccount account = task.getResult(ApiException.class);
-                        firebaseAuthWithGoogle(account);
-                    } catch (ApiException e) {
-                        e.printStackTrace();
-                        updateUI(null);
+            case RC_SIGN_IN:{
+                    // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+                    if (requestCode == RC_SIGN_IN) {
+                        // The Task returned from this call is always completed, no need to attach
+                        // a listener.
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                        try {
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            firebaseAuthWithGoogle(account);
+                        } catch (ApiException e) {
+                            e.printStackTrace();
+                            updateUI(null);
+                        }
                     }
-                }
             }
         }
     }
@@ -469,11 +450,21 @@ public class MainActivity extends AppCompatActivity {
 
                 if( (s2=="OK") || (begin_lv==true) ) {
                     try {
-                        //可以的
-                        String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
-
-                        //把每一欄 存近來
-                        if (key != null) {   //沒有輸入key 為新增時
+                        if( key == "insert"){
+                            //連進 SQL
+                            String sql_insert = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
+                            String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", "SELECT * FROM `test`" + " WHERE `date`='"+ whichDate +"'");
+                            //把每一欄 存近來
+                            id = js.jsonkey(sql, "id");
+                            google_id = js.jsonkey(sql, "google_id");
+                            dates = js.jsonkey(sql, "date");
+                            ntd = js.jsonkey(sql, "ntd");
+                            category = js.jsonkey(sql, "category");
+                            ans = js.jsonkey(sql, "ans");
+                        }else{
+                            //連進 SQL
+                            String sql = js.parseJSON("http://203.145.206.45/select.php", "203.145.206.45", "bdlab", "bdlab", "keepmoney", jsonsql);
+                            //把每一欄 存近來
                             id = js.jsonkey(sql, "id");
                             google_id = js.jsonkey(sql, "google_id");
                             dates = js.jsonkey(sql, "date");
@@ -481,16 +472,13 @@ public class MainActivity extends AppCompatActivity {
                             category = js.jsonkey(sql, "category");
                             ans = js.jsonkey(sql, "ans");
                         }
-
-                        handler.sendEmptyMessage(0);   //呼叫handler
-
                         //歸零
                         s2="ERRO";
                         begin_lv=false;
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        handler.sendEmptyMessage(0);   //呼叫handler
+
+                    } catch (Exception e) { e.printStackTrace(); }
                 }
             }
         }.start();
@@ -500,24 +488,23 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            if(ans!=null){
-                Toast.makeText(MainActivity.this, "k=" + Integer.toString(ans.length), Toast.LENGTH_SHORT).show();
-                testANS=ans;
-//                testANS[0]= "安安"+testANS[0];
-
-                for(int k=0; k<ans.length;k++){
-                    testANS[k]=dates[k]+ "， " + ans[k];
+            if(dates!=null){
+                lvShowArray=dates;
+                for(int k=0; k<dates.length;k++){
+                    lvShowArray[k]=dates[k]+ "， " + category[k] + "，花了 " + ntd[k] + "元";
                 }
-            }
-            Toast.makeText(MainActivity.this, "更新List中", Toast.LENGTH_SHORT).show();
-            if(ans!=null) {
                 lv.setAdapter(null);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, testANS);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, lvShowArray);
                 lv.setAdapter(adapter);
+
+                Toast.makeText(MainActivity.this, "更新List中 From 網路SQL", Toast.LENGTH_SHORT).show();
             }else{
                 String s[] ={"今天沒有記錄哦!"};
+                lv.setAdapter(null);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, s);
                 lv.setAdapter(adapter);
+
+                Toast.makeText(MainActivity.this, "更新List中 From 網路SQL 今天沒資料哦~", Toast.LENGTH_SHORT).show();
             }
         }
     };
